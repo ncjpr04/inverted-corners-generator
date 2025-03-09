@@ -28,7 +28,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header path={pathCode} setup={setup} />
       <main className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4">
         <div className="p-4 flex justify-center items-center">
           <svg
