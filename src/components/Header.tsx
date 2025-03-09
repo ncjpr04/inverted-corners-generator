@@ -4,7 +4,7 @@ const header = () => {
   return (
     <header className="flex items-center justify-between p-4">
       <a href="#">Logo</a>
-      <button className="flex items-center gap-2 bg-gray-200 py-2 px-4 rounded-2xl">
+      <button className="flex items-center gap-2 bg-frappe text-gray-50 hover:brightness-110 transition-all py-2 px-4 rounded-2xl">
         <CiExport /> Export
       </button>
     </header>

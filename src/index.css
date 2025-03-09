@@ -1,7 +1,19 @@
 @import "tailwindcss";
 
+@theme {
+  --color-bg: #eeefe9;
+  --color-coffee: #223030;
+  --color-frappe: #bba58e;
+  --color-green: #959d90;
+}
+
 @layer base {
   button {
     @apply cursor-pointer;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
