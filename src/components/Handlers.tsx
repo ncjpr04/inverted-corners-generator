@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { constraint } from "../utils";
 
 interface Props {
   cornerRadius: CornerRadius;
@@ -10,12 +11,6 @@ const Handlers = ({ cornerRadius, setCornerRadius, setup }: Props) => {
   const activeHandler = useRef<number>(null);
   const circlesRef = useRef<SVGGElement>(null);
   const lastMouse = useRef({ x: 0, y: 0 });
-
-  const fixed = (value: number) =>
-    value % 1 === 0 ? value : +value.toFixed(2);
-
-  const constraint = (value: number) =>
-    fixed(Math.max(0, Math.min(value, setup.width / 2, setup.height / 2)));
 
   useEffect(() => {
     if (!circlesRef.current) return;
@@ -48,25 +43,25 @@ const Handlers = ({ cornerRadius, setCornerRadius, setup }: Props) => {
           case 0: // Top Left
             setCornerRadius((prev) => ({
               ...prev,
-              tl: constraint(prev.tl + dx + dy),
+              tl: constraint(setup, prev.tl + dx + dy),
             }));
             break;
           case 1: // Top Right
             setCornerRadius((prev) => ({
               ...prev,
-              tr: constraint(prev.tr - dx + dy),
+              tr: constraint(setup, prev.tr - dx + dy),
             }));
             break;
           case 2: // Bottom Right
             setCornerRadius((prev) => ({
               ...prev,
-              br: constraint(prev.br - dx - dy),
+              br: constraint(setup, prev.br - dx - dy),
             }));
             break;
           case 3: // Bottom Left
             setCornerRadius((prev) => ({
               ...prev,
-              bl: constraint(prev.bl + dx - dy),
+              bl: constraint(setup, prev.bl + dx - dy),
             }));
             break;
         }

@@ -8,7 +8,7 @@ function App() {
   const [setup, setSetup] = useState({ width: 100, height: 100 });
   const [cornerRadius, setCornerRadius] = useState({
     tl: 10,
-    tr: 30,
+    tr: 1,
     br: 10,
     bl: 10,
   });
@@ -46,7 +46,12 @@ function App() {
           </svg>
         </div>
 
-        <Controllers setup={setup} setSetup={setSetup} />
+        <Controllers
+          setup={setup}
+          setSetup={setSetup}
+          cornerRadius={cornerRadius}
+          setCornerRadius={setCornerRadius}
+        />
       </main>
     </>
   );

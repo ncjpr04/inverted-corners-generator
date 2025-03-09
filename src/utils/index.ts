@@ -4,6 +4,11 @@ const A = (r: number, x: number, y: number, sweep = 1) =>
   `A${r},${r} 0,0,${sweep} ${x},${y}`;
 const L = (x: number, y: number) => `L${x},${y}`;
 
+const fixed = (value: number) => (value % 1 === 0 ? value : +value.toFixed(2));
+
+export const constraint = (setup: Setup, value: number) =>
+  fixed(Math.max(0, Math.min(value, setup.width / 2, setup.height / 2)));
+
 export const generatePath = (
   setup: Setup,
   cornerRadius: CornerRadius,
