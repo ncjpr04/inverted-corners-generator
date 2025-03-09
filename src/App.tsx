@@ -38,7 +38,11 @@ function App() {
           >
             <path ref={pathRef} d={pathCode} className="fill-coffee" />
 
-            <Handlers cornerRadius={cornerRadius} setup={setup} />
+            <Handlers
+              cornerRadius={cornerRadius}
+              setCornerRadius={setCornerRadius}
+              setup={setup}
+            />
           </svg>
         </div>
 
