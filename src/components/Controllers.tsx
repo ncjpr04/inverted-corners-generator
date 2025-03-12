@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { constraint, gcd } from "../utils";
+import { constraint, fixed, gcd } from "../utils";
 import {
   TbBorderCorners,
   TbRectangle,
@@ -122,6 +122,80 @@ const Controllers = ({
     }));
   };
 
+  const updateInvertedCorners = (
+    corner: keyof typeof invertedCorners,
+    newValues: Partial<typeof invertedCorners.tl>
+  ) => {
+    setInvertedCorners((prev) => {
+      const { width, height } = setup;
+
+      // Extract values for adjacent corners
+      const { tl, tr, bl, br } = prev;
+
+      // Extract values for corner radii
+      const { tl: radTL, tr: radTR, bl: radBL, br: radBR } = cornerRadius;
+
+      // Compute the available width & height for each corner based on constraints
+      const maxWidth = {
+        tl: tr.inverted
+          ? width - tr.roundness - tl.roundness - tr.width
+          : width - radTR - tl.roundness,
+
+        tr: tl.inverted
+          ? width - tr.roundness - tl.roundness - tl.width
+          : width - radTL - tr.roundness,
+        bl: br.inverted
+          ? width - br.roundness - bl.roundness - br.width
+          : width - radBR - bl.roundness,
+        br: bl.inverted
+          ? width - br.roundness - bl.roundness - bl.width
+          : width - radBL - br.roundness,
+      };
+
+      const maxHeight = {
+        tl: bl.inverted
+          ? height - tl.roundness - bl.roundness - bl.height
+          : height - radBL - tl.roundness,
+        tr: br.inverted
+          ? height - tr.roundness - br.roundness - br.height
+          : height - radTR - br.roundness,
+        bl: tl.inverted
+          ? height - bl.roundness - tl.roundness - tl.height
+          : height - radTL - bl.roundness,
+        br: tr.inverted
+          ? height - br.roundness - tr.roundness - tr.height
+          : height - radBR - tr.roundness,
+      };
+
+      return {
+        ...prev,
+        [corner]: {
+          ...prev[corner],
+          width: fixed(
+            Math.min(
+              maxWidth[corner],
+              Math.max(
+                prev[corner].roundness * 2,
+                newValues.width ?? prev[corner].width
+              )
+            )
+          ),
+          height: fixed(
+            Math.min(
+              maxHeight[corner],
+              Math.max(
+                prev[corner].roundness * 2,
+                newValues.height ?? prev[corner].height
+              )
+            )
+          ),
+          roundness: fixed(newValues.roundness ?? prev[corner].roundness),
+          inverted: newValues.inverted ?? prev[corner].inverted,
+        },
+      };
+    });
+  };
+
   return (
     <div className="rounded-2xl flex flex-col gap-4 shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
       <div>
@@ -241,6 +315,104 @@ const Controllers = ({
           >
             Bottom Right
           </CheckBox>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="mb-2">Individual Inverted Corners</h2>
+        <div className="grid gap-2">
+          <div className="flex gap-2">
+            <Input
+              icon={<span>W</span>}
+              onChange={(e) =>
+                updateInvertedCorners("tl", { width: +e.target.value! })
+              }
+              value={invertedCorners.tl.width}
+            />
+            <Input
+              icon={<span>H</span>}
+              onChange={(e) =>
+                updateInvertedCorners("tl", { height: +e.target.value! })
+              }
+              value={invertedCorners.tl.height}
+            />
+            <Input
+              icon={<RxCornerTopRight />}
+              onChange={(e) =>
+                updateInvertedCorners("tl", { roundness: +e.target.value! })
+              }
+              value={invertedCorners.tl.roundness}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Input
+              icon={<span>W</span>}
+              onChange={(e) =>
+                updateInvertedCorners("tr", { width: +e.target.value! })
+              }
+              value={invertedCorners.tr.width}
+            />
+            <Input
+              icon={<span>H</span>}
+              onChange={(e) =>
+                updateInvertedCorners("tr", { height: +e.target.value! })
+              }
+              value={invertedCorners.tr.height}
+            />
+            <Input
+              icon={<RxCornerTopRight />}
+              onChange={(e) =>
+                updateInvertedCorners("tr", { roundness: +e.target.value! })
+              }
+              value={invertedCorners.tr.roundness}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Input
+              icon={<span>W</span>}
+              onChange={(e) =>
+                updateInvertedCorners("br", { width: +e.target.value! })
+              }
+              value={invertedCorners.br.width}
+            />
+            <Input
+              icon={<span>H</span>}
+              onChange={(e) =>
+                updateInvertedCorners("br", { height: +e.target.value! })
+              }
+              value={invertedCorners.br.height}
+            />
+            <Input
+              icon={<RxCornerTopRight />}
+              onChange={(e) =>
+                updateInvertedCorners("br", { roundness: +e.target.value! })
+              }
+              value={invertedCorners.br.roundness}
+            />
+          </div>
+          <div className="flex gap-2">
+            <Input
+              icon={<span>W</span>}
+              onChange={(e) =>
+                updateInvertedCorners("bl", { width: +e.target.value! })
+              }
+              value={invertedCorners.bl.width}
+            />
+            <Input
+              icon={<span>H</span>}
+              onChange={(e) =>
+                updateInvertedCorners("bl", { height: +e.target.value! })
+              }
+              value={invertedCorners.bl.height}
+            />
+            <Input
+              icon={<RxCornerTopRight />}
+              onChange={(e) =>
+                updateInvertedCorners("bl", { roundness: +e.target.value! })
+              }
+              value={invertedCorners.bl.roundness}
+            />
+          </div>
         </div>
       </div>
     </div>

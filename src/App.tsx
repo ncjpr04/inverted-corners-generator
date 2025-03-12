@@ -7,16 +7,16 @@ import { generatePath } from "./utils/index.ts";
 function App() {
   const [setup, setSetup] = useState({ width: 100, height: 100 });
   const [cornerRadius, setCornerRadius] = useState({
-    tl: 0,
+    tl: 20,
     tr: 1,
     br: 10,
     bl: 10,
   });
   const [invertedCorners, setInvertedCorners] = useState({
-    tl: { width: 10, height: 30, roundness: 0, inverted: true },
-    tr: { width: 90, height: 30, roundness: 10, inverted: true },
-    br: { width: 10, height: 10, roundness: 10, inverted: false },
-    bl: { width: 20, height: 20, roundness: 10, inverted: false },
+    tl: { width: 20, height: 30, roundness: 10, inverted: false },
+    tr: { width: 60, height: 30, roundness: 10, inverted: true },
+    br: { width: 30, height: 20, roundness: 10, inverted: false },
+    bl: { width: 20, height: 20, roundness: 10, inverted: true },
   });
   const [pathCode, setPathCode] = useState("");
 

@@ -4,7 +4,8 @@ const A = (r: number, x: number, y: number, sweep = 1) =>
   `A${r},${r} 0,0,${sweep} ${x},${y}`;
 const L = (x: number, y: number) => `L${x},${y}`;
 
-const fixed = (value: number) => (value % 1 === 0 ? value : +value.toFixed(2));
+export const fixed = (value: number) =>
+  value % 1 === 0 ? value : +value.toFixed(2);
 
 export const constraint = (setup: Setup, value: number) =>
   fixed(Math.max(0, Math.min(value, setup.width / 2, setup.height / 2)));
@@ -80,7 +81,7 @@ export const generatePath = (
     path +=
       A(tl.roundness, tl.roundness, tl.height) +
       L(tl.width - tl.roundness, tl.height) +
-      A(tl.roundness, tl.width, tl.width - tl.roundness, 0) +
+      A(tl.roundness, tl.width, tl.height - tl.roundness, 0) +
       L(tl.width, tl.roundness) +
       A(tl.roundness, tl.width + tl.roundness, y);
   } else path += `A${topLeft},${topLeft} 0,0,1 ${x + topLeft},${y}Z`;

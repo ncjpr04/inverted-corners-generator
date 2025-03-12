@@ -122,26 +122,6 @@ const Handlers = ({
           />
         )}
       </g>
-      {/* Inverted Border Handlers */}
-      <g className="fill-green">
-        <rect
-          className="hover:cursor-n-resize"
-          x={
-            setup.width -
-            invertedCorners.tr.width +
-            invertedCorners.tr.roundness
-          }
-          y={invertedCorners.tr.height}
-          width={invertedCorners.tr.width - invertedCorners.tr.roundness * 2}
-          height={2}
-        />
-        <rect
-          x={setup.width - invertedCorners.tr.width}
-          y={invertedCorners.tr.roundness}
-          width={2}
-          height={invertedCorners.tr.height - invertedCorners.tr.roundness * 2}
-        />
-      </g>
     </>
   );
 };
