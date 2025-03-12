@@ -15,7 +15,7 @@ const ExportModal = ({ path, setup, ref }: Props) => {
 
   useEffect(() => {
     svgCode.current = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${setup.width} ${setup.height}" width="${setup.width}" height="${setup.height}"><path d="${path}" /></svg>`;
-    clipPathCode.current = `clip-path: path("${path}")`;
+    clipPathCode.current = `clip-path: path("${path}");`;
   }, [path]);
 
   const downloadSVG = () => {
@@ -45,6 +45,19 @@ const ExportModal = ({ path, setup, ref }: Props) => {
       .catch(() => console.log("error while writing to clipboard"));
   };
 
+  const copyMask = () => {
+    const encodedSVG = encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${setup.width} ${setup.height}"><path d="${path}" fill="#fff" /></svg>`
+    );
+    const maskCode = `-webkit-mask: url('data:image/svg+xml,${encodedSVG}') no-repeat center / contain;
+          mask: url('data:image/svg+xml,${encodedSVG}') no-repeat center / contain;`;
+
+    navigator.clipboard
+      .writeText(maskCode)
+      .then(() => console.log("Mask copied"))
+      .catch(() => console.log("error writing to the clipboard"));
+  };
+
   return (
     <dialog
       ref={ref}
@@ -60,7 +73,13 @@ const ExportModal = ({ path, setup, ref }: Props) => {
         </button>
       </div>
 
-      <div className="grid  @min-[32rem]:grid-cols-3 gap-3">
+      <div className="grid gap-3">
+        <button
+          onClick={copyMask}
+          className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
+        >
+          <MdOutlineContentCopy /> Copy CSS Mask
+        </button>
         <button
           onClick={copySVG}
           className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"

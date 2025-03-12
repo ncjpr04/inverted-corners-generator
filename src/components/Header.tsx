@@ -7,6 +7,7 @@ interface Props {
   path: string;
 }
 
+// TODO: make a custom logo
 const Logo = () => {
   return (
     <svg
@@ -24,7 +25,7 @@ const Logo = () => {
   );
 };
 
-const header = ({ setup, path }: Props) => {
+const Header = ({ setup, path }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
@@ -46,4 +47,4 @@ const header = ({ setup, path }: Props) => {
   );
 };
 
-export default header;
+export default Header;
