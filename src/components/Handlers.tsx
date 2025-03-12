@@ -5,9 +5,15 @@ interface Props {
   cornerRadius: CornerRadius;
   setCornerRadius: React.Dispatch<React.SetStateAction<CornerRadius>>;
   setup: Setup;
+  invertedCorners: InvertedCorners;
 }
 
-const Handlers = ({ cornerRadius, setCornerRadius, setup }: Props) => {
+const Handlers = ({
+  cornerRadius,
+  setCornerRadius,
+  setup,
+  invertedCorners,
+}: Props) => {
   const activeHandler = useRef<number>(null);
   const circlesRef = useRef<SVGGElement>(null);
   const lastMouse = useRef({ x: 0, y: 0 });
@@ -81,27 +87,62 @@ const Handlers = ({ cornerRadius, setCornerRadius, setup }: Props) => {
   }, []);
 
   return (
-    <g ref={circlesRef} className="fill-coffee stroke-gray-300">
-      <circle data-index={0} cx={cornerRadius.tl} cy={cornerRadius.tl} r="1" />
-      <circle
-        data-index={1}
-        cx={setup.width - cornerRadius.tr}
-        cy={cornerRadius.tr}
-        r="1"
-      />
-      <circle
-        data-index={2}
-        cx={setup.width - cornerRadius.br}
-        cy={setup.height - cornerRadius.br}
-        r="1"
-      />
-      <circle
-        data-index={3}
-        cx={cornerRadius.bl}
-        cy={setup.height - cornerRadius.bl}
-        r="1"
-      />
-    </g>
+    <>
+      <g ref={circlesRef} className="fill-coffee stroke-gray-300">
+        {!invertedCorners.tl.inverted && (
+          <circle
+            data-index={0}
+            cx={cornerRadius.tl}
+            cy={cornerRadius.tl}
+            r="1"
+          />
+        )}
+        {!invertedCorners.tr.inverted && (
+          <circle
+            data-index={1}
+            cx={setup.width - cornerRadius.tr}
+            cy={cornerRadius.tr}
+            r="1"
+          />
+        )}
+        {!invertedCorners.br.inverted && (
+          <circle
+            data-index={2}
+            cx={setup.width - cornerRadius.br}
+            cy={setup.height - cornerRadius.br}
+            r="1"
+          />
+        )}
+        {!invertedCorners.bl.inverted && (
+          <circle
+            data-index={3}
+            cx={cornerRadius.bl}
+            cy={setup.height - cornerRadius.bl}
+            r="1"
+          />
+        )}
+      </g>
+      {/* Inverted Border Handlers */}
+      <g className="fill-green">
+        <rect
+          className="hover:cursor-n-resize"
+          x={
+            setup.width -
+            invertedCorners.tr.width +
+            invertedCorners.tr.roundness
+          }
+          y={invertedCorners.tr.height}
+          width={invertedCorners.tr.width - invertedCorners.tr.roundness * 2}
+          height={2}
+        />
+        <rect
+          x={setup.width - invertedCorners.tr.width}
+          y={invertedCorners.tr.roundness}
+          width={2}
+          height={invertedCorners.tr.height - invertedCorners.tr.roundness * 2}
+        />
+      </g>
+    </>
   );
 };
 

@@ -7,16 +7,16 @@ import { generatePath } from "./utils/index.ts";
 function App() {
   const [setup, setSetup] = useState({ width: 100, height: 100 });
   const [cornerRadius, setCornerRadius] = useState({
-    tl: 10,
+    tl: 0,
     tr: 1,
     br: 10,
     bl: 10,
   });
   const [invertedCorners, setInvertedCorners] = useState({
-    tl: { width: 10, height: 10, roundness: 20, inverted: false },
-    tr: { width: 10, height: 10, roundness: 20, inverted: false },
-    br: { width: 10, height: 10, roundness: 20, inverted: false },
-    bl: { width: 10, height: 10, roundness: 20, inverted: false },
+    tl: { width: 10, height: 30, roundness: 0, inverted: true },
+    tr: { width: 90, height: 30, roundness: 10, inverted: true },
+    br: { width: 10, height: 10, roundness: 10, inverted: false },
+    bl: { width: 20, height: 20, roundness: 10, inverted: false },
   });
   const [pathCode, setPathCode] = useState("");
 
@@ -41,6 +41,7 @@ function App() {
             <Handlers
               cornerRadius={cornerRadius}
               setCornerRadius={setCornerRadius}
+              invertedCorners={invertedCorners}
               setup={setup}
             />
           </svg>
@@ -51,6 +52,8 @@ function App() {
           setSetup={setSetup}
           cornerRadius={cornerRadius}
           setCornerRadius={setCornerRadius}
+          invertedCorners={invertedCorners}
+          setInvertedCorners={setInvertedCorners}
         />
       </main>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { constraint, gcd } from "../utils";
 import {
   TbBorderCorners,
@@ -12,12 +12,15 @@ import {
   RxCornerTopLeft,
   RxCornerTopRight,
 } from "react-icons/rx";
+import InvertedTopRightCorner from "../assets/InvertedTopRightCorner";
 
 interface Props {
   setup: Setup;
   setSetup: React.Dispatch<React.SetStateAction<Setup>>;
   cornerRadius: CornerRadius;
   setCornerRadius: React.Dispatch<React.SetStateAction<CornerRadius>>;
+  invertedCorners: InvertedCorners;
+  setInvertedCorners: React.Dispatch<React.SetStateAction<InvertedCorners>>;
 }
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactElement;
@@ -44,11 +47,23 @@ const Input = ({ icon, ...rest }: InputProps) => {
   );
 };
 
+interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  icon?: React.ReactElement;
+}
+const CheckBox = ({ icon, children, ...rest }: CheckBoxProps) => (
+  <label className="border flex text-sm gap-2 items-center cursor-pointer has-checked:bg-frappe p-2 rounded-md">
+    {icon} {children}
+    <input type="checkbox" {...rest} className="sr-only" />
+  </label>
+);
+
 const Controllers = ({
   setup,
   setSetup,
   setCornerRadius,
   cornerRadius,
+  invertedCorners,
+  setInvertedCorners,
 }: Props) => {
   const [aspectRatio, setAspectRatio] = useState(
     gcd(setup.width, setup.height)
@@ -100,6 +115,13 @@ const Controllers = ({
     }));
   };
 
+  const toggleInversion = (corner: keyof InvertedCorners) => {
+    setInvertedCorners((prev) => ({
+      ...prev,
+      [corner]: { ...prev[corner], inverted: !prev[corner].inverted },
+    }));
+  };
+
   return (
     <div className="rounded-2xl flex flex-col gap-4 shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
       <div>
@@ -127,7 +149,7 @@ const Controllers = ({
             />
             <button className="sr-only" />
           </form>
-          <p className="flex items-center gap-2">
+          <p className="flex ml-auto items-center gap-2">
             {setup.width / aspectRatio}:{setup.height / aspectRatio}
             {setup.width == setup.height ? (
               <TbSquare size={23} />
@@ -183,6 +205,43 @@ const Controllers = ({
             />
           </div>
         </form>
+      </div>
+
+      <div>
+        <h2 className="mb-2">Inverted Corners</h2>
+        <div className="grid grid-cols-2 gap-3">
+          <CheckBox
+            checked={invertedCorners.tl.inverted}
+            onChange={() => toggleInversion("tl")}
+            icon={<InvertedTopRightCorner rotation={-90} />}
+          >
+            Top Left
+          </CheckBox>
+
+          <CheckBox
+            checked={invertedCorners.tr.inverted}
+            onChange={() => toggleInversion("tr")}
+            icon={<InvertedTopRightCorner />}
+          >
+            Top Right
+          </CheckBox>
+
+          <CheckBox
+            checked={invertedCorners.bl.inverted}
+            onChange={() => toggleInversion("bl")}
+            icon={<InvertedTopRightCorner rotation={180} />}
+          >
+            Bottom Left
+          </CheckBox>
+
+          <CheckBox
+            checked={invertedCorners.br.inverted}
+            onChange={() => toggleInversion("br")}
+            icon={<InvertedTopRightCorner rotation={90} />}
+          >
+            Bottom Right
+          </CheckBox>
+        </div>
       </div>
     </div>
   );
