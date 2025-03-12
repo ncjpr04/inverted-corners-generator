@@ -214,7 +214,7 @@ const Controllers = ({
             <Input
               icon={<span>W</span>}
               name="width"
-              aria-label="width"
+              aria-label="shape width"
               defaultValue={setup.width}
               onBlur={updateDimensions}
             />
@@ -222,13 +222,14 @@ const Controllers = ({
             <Input
               icon={<span>H</span>}
               name="height"
-              aria-label="height"
+              aria-label="shape height"
               defaultValue={setup.height}
               onBlur={updateDimensions}
             />
             <button className="sr-only" />
           </form>
           <p className="flex ml-auto items-center gap-2">
+            <span className="sr-only">Aspect ratio:</span>
             {setup.width / aspectRatio}:{setup.height / aspectRatio}
             {setup.width == setup.height ? (
               <TbSquare size={23} />
@@ -253,6 +254,7 @@ const Controllers = ({
           <Input
             icon={<TbBorderCorners />}
             name="radius"
+            aria-label="ALl Corners Border Radius"
             value={getCornerRadiusValue()}
             onChange={() => updateCornerRadius(setup)}
           />
@@ -261,24 +263,28 @@ const Controllers = ({
             <Input
               icon={<RxCornerTopLeft />}
               name="tl"
+              aria-label="top left radius"
               onChange={updateSpecificCornerRadius}
               value={cornerRadius.tl}
             />
             <Input
               icon={<RxCornerTopRight />}
               name="tr"
+              aria-label="top right radius"
               onChange={updateSpecificCornerRadius}
               value={cornerRadius.tr}
             />
             <Input
               icon={<RxCornerBottomLeft />}
               name="bl"
+              aria-label="bottom left radius"
               onChange={updateSpecificCornerRadius}
               value={cornerRadius.bl}
             />
             <Input
               icon={<RxCornerBottomRight />}
               name="br"
+              aria-label="bottom right radius"
               onChange={updateSpecificCornerRadius}
               value={cornerRadius.br}
             />
@@ -302,6 +308,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tl", { width: +e.target.value! })
               }
+              aria-label="top left inverted corner's width"
               value={invertedCorners.tl.width}
             />
             <Input
@@ -309,6 +316,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tl", { height: +e.target.value! })
               }
+              aria-label="top left inverted corner's height"
               value={invertedCorners.tl.height}
             />
             <Input
@@ -316,6 +324,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tl", { roundness: +e.target.value! })
               }
+              aria-label="top left inverted corner's roundness"
               value={invertedCorners.tl.roundness}
             />
           </div>
@@ -335,6 +344,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tr", { width: +e.target.value! })
               }
+              aria-label="top right inverted corner's width"
               value={invertedCorners.tr.width}
             />
             <Input
@@ -342,6 +352,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tr", { height: +e.target.value! })
               }
+              aria-label="top right inverted corner's height"
               value={invertedCorners.tr.height}
             />
             <Input
@@ -349,6 +360,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("tr", { roundness: +e.target.value! })
               }
+              aria-label="top right inverted corner's roundness"
               value={invertedCorners.tr.roundness}
             />
           </div>
@@ -368,6 +380,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("br", { width: +e.target.value! })
               }
+              aria-label="bottom right inverted corner's width"
               value={invertedCorners.br.width}
             />
             <Input
@@ -375,6 +388,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("br", { height: +e.target.value! })
               }
+              aria-label="bottom right inverted corner's height"
               value={invertedCorners.br.height}
             />
             <Input
@@ -382,6 +396,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("br", { roundness: +e.target.value! })
               }
+              aria-label="bottom right inverted corner's roundness"
               value={invertedCorners.br.roundness}
             />
           </div>
@@ -401,6 +416,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("bl", { width: +e.target.value! })
               }
+              aria-label="bottom left inverted corner's width"
               value={invertedCorners.bl.width}
             />
             <Input
@@ -408,6 +424,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("bl", { height: +e.target.value! })
               }
+              aria-label="bottom left inverted corner's height"
               value={invertedCorners.bl.height}
             />
             <Input
@@ -415,6 +432,7 @@ const Controllers = ({
               onChange={(e) =>
                 updateInvertedCorners("bl", { roundness: +e.target.value! })
               }
+              aria-label="bottom left inverted corner's roundness"
               value={invertedCorners.bl.roundness}
             />
           </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { BsDownload } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineContentCopy } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
 
 interface Props {
   path: string;
@@ -34,15 +35,15 @@ const ExportModal = ({ path, setup, ref }: Props) => {
   const copySVG = () => {
     navigator.clipboard
       .writeText(svgCode.current)
-      .then(() => console.log("copied successfully"))
-      .catch((err) => console.log(err));
+      .then(() => toast.success("SVG copied successfully"))
+      .catch(() => toast.error("Error while writing to the clipboard"));
   };
 
   const copyClipPath = () => {
     navigator.clipboard
       .writeText(clipPathCode.current)
-      .then(() => console.log("ClipPath copied"))
-      .catch(() => console.log("error while writing to clipboard"));
+      .then(() => toast.success("ClipPath copied successfully"))
+      .catch(() => toast.error("Error while writing to the clipboard"));
   };
 
   const copyMask = () => {
@@ -54,54 +55,57 @@ const ExportModal = ({ path, setup, ref }: Props) => {
 
     navigator.clipboard
       .writeText(maskCode)
-      .then(() => console.log("Mask copied"))
-      .catch(() => console.log("error writing to the clipboard"));
+      .then(() => toast.success("Mask copied successfully"))
+      .catch(() => toast.error("Error writing to the clipboard"));
   };
 
   return (
-    <dialog
-      ref={ref}
-      className="@container fixed w-xl left-1/2 top-1/2 -translate-1/2 p-5 rounded-2xl"
-    >
-      <div className="flex items-center justify-between mb-7">
-        <h2 className="text-2xl">Export your Work</h2>
-        <button
-          onClick={() => ref.current?.close()}
-          className="p-2 rounded-full bg-bg"
-        >
-          <IoClose />
-        </button>
-      </div>
+    <>
+      <dialog
+        ref={ref}
+        className="@container fixed w-xl left-1/2 top-1/2 -translate-1/2 p-5 rounded-2xl"
+      >
+        <div className="flex items-center justify-between mb-7">
+          <h2 className="text-2xl">Export your Work</h2>
+          <button
+            onClick={() => ref.current?.close()}
+            className="p-2 rounded-full bg-bg"
+          >
+            <IoClose />
+          </button>
+        </div>
 
-      <div className="grid gap-3">
-        <button
-          onClick={copyMask}
-          className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
-        >
-          <MdOutlineContentCopy /> Copy CSS Mask
-        </button>
-        <button
-          onClick={copySVG}
-          className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
-        >
-          <MdOutlineContentCopy /> Copy SVG
-        </button>
-        <button
-          onClick={copyClipPath}
-          className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
-        >
-          <MdOutlineContentCopy />
-          Copy clip-path
-        </button>
-        <button
-          className="flex items-center gap-2 bg-green text-white border transition-all border-gray-200 hover:brightness-110 justify-center rounded-md px-3 py-2"
-          onClick={downloadSVG}
-        >
-          <BsDownload />
-          Download
-        </button>
-      </div>
-    </dialog>
+        <div className="grid gap-3">
+          <button
+            onClick={copyMask}
+            className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
+          >
+            <MdOutlineContentCopy /> Copy CSS Mask
+          </button>
+          <button
+            onClick={copySVG}
+            className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
+          >
+            <MdOutlineContentCopy /> Copy SVG
+          </button>
+          <button
+            onClick={copyClipPath}
+            className="flex items-center gap-2 border border-gray-300 transition-all hover:brightness-90 justify-center rounded-md px-3 py-2"
+          >
+            <MdOutlineContentCopy />
+            Copy clip-path
+          </button>
+          <button
+            className="flex items-center gap-2 bg-green text-white border transition-all border-gray-200 hover:brightness-110 justify-center rounded-md px-3 py-2"
+            onClick={downloadSVG}
+          >
+            <BsDownload />
+            Download
+          </button>
+        </div>
+      </dialog>
+      <ToastContainer theme="dark" autoClose={1000} position="top-center" />
+    </>
   );
 };
 
