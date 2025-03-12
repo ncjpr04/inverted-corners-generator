@@ -4,7 +4,7 @@
 
 A tool to help you generate inverted border radii for you CSS components, powered by SVG path.
 
-![Screenshot](./screenshot.png)
+![Screenshot](./public/screenshot.png)
 
 ## Why do we need this tool
 
