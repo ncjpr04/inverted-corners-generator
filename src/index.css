@@ -18,3 +18,45 @@
     margin: 0;
   }
 }
+
+@layer components {
+  [role="switch"] {
+    --padd: 0.25em;
+    --track-width: 2.5em;
+    box-sizing: content-box;
+
+    appearance: none;
+    display: inline-grid;
+    background-color: var(--color-green);
+    width: var(--track-width);
+    height: calc(var(--track-width) / 2);
+    border-radius: 9999px; /* to make it a pill shape */
+    padding: var(--padd);
+
+    cursor: pointer;
+    transition: background-color 300ms;
+  }
+  [role="switch"]::before {
+    content: "";
+    /* make it a circle */
+    width: calc(var(--track-width) / 2);
+    height: calc(var(--track-width) / 2);
+    border-radius: 50%;
+
+    background-color: #eceff1; /* the color of the thumb */
+    box-shadow: 0 0 1px #444a;
+
+    transition: transform 300ms, box-shadow 150ms ease-in-out;
+  }
+  [role="switch"]:checked {
+    background-color: var(--color-frappe);
+  }
+  [role="switch"]:checked::before {
+    /* place the thumb at the other side on checked */
+    transform: translateX(calc(100% - var(--padd) / 2));
+  }
+  [role="switch"]:hover::before,
+  [role="switch"]:focus-visible::before {
+    box-shadow: 0 0 0 2px #cfd8dc90;
+  }
+}

@@ -50,10 +50,14 @@ const Input = ({ icon, ...rest }: InputProps) => {
 interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactElement;
 }
-const CheckBox = ({ icon, children, ...rest }: CheckBoxProps) => (
-  <label className="border flex text-sm gap-2 items-center cursor-pointer has-checked:bg-frappe p-2 rounded-md">
-    {icon} {children}
-    <input type="checkbox" {...rest} className="sr-only" />
+const CheckBox = ({ icon, children, className, ...rest }: CheckBoxProps) => (
+  <label
+    className={`flex text-sm gap-2 justify-between items-center cursor-pointer p-2 rounded-md ${className}`}
+  >
+    <p className="flex items-center gap-2">
+      {icon} {children}
+    </p>
+    <input type="checkbox" {...rest} role="switch" />
   </label>
 );
 
@@ -283,7 +287,7 @@ const Controllers = ({
 
       <div>
         <h2 className="mb-2">Inverted Corners</h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="border rounded-md p-1 mb-3">
           <CheckBox
             checked={invertedCorners.tl.inverted}
             onChange={() => toggleInversion("tl")}
@@ -291,37 +295,7 @@ const Controllers = ({
           >
             Top Left
           </CheckBox>
-
-          <CheckBox
-            checked={invertedCorners.tr.inverted}
-            onChange={() => toggleInversion("tr")}
-            icon={<InvertedTopRightCorner />}
-          >
-            Top Right
-          </CheckBox>
-
-          <CheckBox
-            checked={invertedCorners.bl.inverted}
-            onChange={() => toggleInversion("bl")}
-            icon={<InvertedTopRightCorner rotation={180} />}
-          >
-            Bottom Left
-          </CheckBox>
-
-          <CheckBox
-            checked={invertedCorners.br.inverted}
-            onChange={() => toggleInversion("br")}
-            icon={<InvertedTopRightCorner rotation={90} />}
-          >
-            Bottom Right
-          </CheckBox>
-        </div>
-      </div>
-
-      <div>
-        <h2 className="mb-2">Individual Inverted Corners</h2>
-        <div className="grid gap-2">
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             <Input
               icon={<span>W</span>}
               onChange={(e) =>
@@ -344,7 +318,17 @@ const Controllers = ({
               value={invertedCorners.tl.roundness}
             />
           </div>
-          <div className="flex gap-2">
+        </div>
+
+        <div className="border rounded-md p-1 mb-3">
+          <CheckBox
+            checked={invertedCorners.tr.inverted}
+            onChange={() => toggleInversion("tr")}
+            icon={<InvertedTopRightCorner />}
+          >
+            Top Right
+          </CheckBox>
+          <div className="flex gap-2 mt-1">
             <Input
               icon={<span>W</span>}
               onChange={(e) =>
@@ -367,7 +351,17 @@ const Controllers = ({
               value={invertedCorners.tr.roundness}
             />
           </div>
-          <div className="flex gap-2">
+        </div>
+
+        <div className="border rounded-md p-1 mb-3">
+          <CheckBox
+            checked={invertedCorners.br.inverted}
+            onChange={() => toggleInversion("br")}
+            icon={<InvertedTopRightCorner rotation={90} />}
+          >
+            Bottom Right
+          </CheckBox>
+          <div className="flex gap-2 mt-1">
             <Input
               icon={<span>W</span>}
               onChange={(e) =>
@@ -390,7 +384,17 @@ const Controllers = ({
               value={invertedCorners.br.roundness}
             />
           </div>
-          <div className="flex gap-2">
+        </div>
+
+        <div className="border rounded-md p-1 mb-3">
+          <CheckBox
+            checked={invertedCorners.bl.inverted}
+            onChange={() => toggleInversion("bl")}
+            icon={<InvertedTopRightCorner rotation={180} />}
+          >
+            Bottom Left
+          </CheckBox>
+          <div className="flex gap-2 mt-1">
             <Input
               icon={<span>W</span>}
               onChange={(e) =>
