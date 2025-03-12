@@ -124,6 +124,7 @@ const Controllers = ({
       ...prev,
       [corner]: { ...prev[corner], inverted: !prev[corner].inverted },
     }));
+    updateInvertedCorners(corner, {});
   };
 
   const updateInvertedCorners = (
