@@ -24,9 +24,10 @@ interface Props {
 }
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactElement;
+  blurValue?: number;
 }
 
-const Input = ({ icon, ...rest }: InputProps) => {
+const Input = ({ icon, blurValue, ...rest }: InputProps) => {
   return (
     <div className="relative">
       {icon && (
@@ -36,6 +37,21 @@ const Input = ({ icon, ...rest }: InputProps) => {
       )}
       <input
         {...rest}
+        ref={(el) => {
+          if (!el || !blurValue) return;
+
+          const controller = new AbortController();
+          el.addEventListener(
+            "blur",
+            () => {
+              el.value = String(blurValue);
+            },
+            {
+              signal: controller.signal,
+            }
+          );
+          return () => controller.abort();
+        }}
         type="number"
         step="any"
         min="0"
@@ -134,13 +150,10 @@ const Controllers = ({
     setInvertedCorners((prev) => {
       const { width, height } = setup;
 
-      // Extract values for adjacent corners
       const { tl, tr, bl, br } = prev;
 
-      // Extract values for corner radii
       const { tl: radTL, tr: radTR, bl: radBL, br: radBR } = cornerRadius;
 
-      // Compute the available width & height for each corner based on constraints
       const maxWidth = {
         tl: tr.inverted
           ? width - tr.roundness - tl.roundness - tr.width
@@ -309,7 +322,8 @@ const Controllers = ({
                 updateInvertedCorners("tl", { width: +e.target.value! })
               }
               aria-label="top left inverted corner's width"
-              value={invertedCorners.tl.width}
+              blurValue={invertedCorners.tl.width}
+              defaultValue={invertedCorners.tl.width}
             />
             <Input
               icon={<span>H</span>}
@@ -317,7 +331,8 @@ const Controllers = ({
                 updateInvertedCorners("tl", { height: +e.target.value! })
               }
               aria-label="top left inverted corner's height"
-              value={invertedCorners.tl.height}
+              defaultValue={invertedCorners.tl.height}
+              blurValue={invertedCorners.tl.height}
             />
             <Input
               icon={<RxCornerTopRight />}
@@ -325,7 +340,8 @@ const Controllers = ({
                 updateInvertedCorners("tl", { roundness: +e.target.value! })
               }
               aria-label="top left inverted corner's roundness"
-              value={invertedCorners.tl.roundness}
+              defaultValue={invertedCorners.tl.roundness}
+              blurValue={invertedCorners.tl.roundness}
             />
           </div>
         </div>
@@ -345,7 +361,8 @@ const Controllers = ({
                 updateInvertedCorners("tr", { width: +e.target.value! })
               }
               aria-label="top right inverted corner's width"
-              value={invertedCorners.tr.width}
+              defaultValue={invertedCorners.tr.width}
+              blurValue={invertedCorners.tr.width}
             />
             <Input
               icon={<span>H</span>}
@@ -353,7 +370,8 @@ const Controllers = ({
                 updateInvertedCorners("tr", { height: +e.target.value! })
               }
               aria-label="top right inverted corner's height"
-              value={invertedCorners.tr.height}
+              defaultValue={invertedCorners.tr.height}
+              blurValue={invertedCorners.tr.height}
             />
             <Input
               icon={<RxCornerTopRight />}
@@ -361,7 +379,8 @@ const Controllers = ({
                 updateInvertedCorners("tr", { roundness: +e.target.value! })
               }
               aria-label="top right inverted corner's roundness"
-              value={invertedCorners.tr.roundness}
+              defaultValue={invertedCorners.tr.roundness}
+              blurValue={invertedCorners.tr.roundness}
             />
           </div>
         </div>
@@ -381,7 +400,8 @@ const Controllers = ({
                 updateInvertedCorners("br", { width: +e.target.value! })
               }
               aria-label="bottom right inverted corner's width"
-              value={invertedCorners.br.width}
+              defaultValue={invertedCorners.br.width}
+              blurValue={invertedCorners.br.width}
             />
             <Input
               icon={<span>H</span>}
@@ -389,7 +409,8 @@ const Controllers = ({
                 updateInvertedCorners("br", { height: +e.target.value! })
               }
               aria-label="bottom right inverted corner's height"
-              value={invertedCorners.br.height}
+              defaultValue={invertedCorners.br.height}
+              blurValue={invertedCorners.br.height}
             />
             <Input
               icon={<RxCornerTopRight />}
@@ -397,7 +418,8 @@ const Controllers = ({
                 updateInvertedCorners("br", { roundness: +e.target.value! })
               }
               aria-label="bottom right inverted corner's roundness"
-              value={invertedCorners.br.roundness}
+              defaultValue={invertedCorners.br.roundness}
+              blurValue={invertedCorners.br.roundness}
             />
           </div>
         </div>
@@ -417,7 +439,8 @@ const Controllers = ({
                 updateInvertedCorners("bl", { width: +e.target.value! })
               }
               aria-label="bottom left inverted corner's width"
-              value={invertedCorners.bl.width}
+              defaultValue={invertedCorners.bl.width}
+              blurValue={invertedCorners.bl.width}
             />
             <Input
               icon={<span>H</span>}
@@ -425,7 +448,8 @@ const Controllers = ({
                 updateInvertedCorners("bl", { height: +e.target.value! })
               }
               aria-label="bottom left inverted corner's height"
-              value={invertedCorners.bl.height}
+              defaultValue={invertedCorners.bl.height}
+              blurValue={invertedCorners.bl.height}
             />
             <Input
               icon={<RxCornerTopRight />}
@@ -433,7 +457,8 @@ const Controllers = ({
                 updateInvertedCorners("bl", { roundness: +e.target.value! })
               }
               aria-label="bottom left inverted corner's roundness"
-              value={invertedCorners.bl.roundness}
+              defaultValue={invertedCorners.bl.roundness}
+              blurValue={invertedCorners.bl.roundness}
             />
           </div>
         </div>
