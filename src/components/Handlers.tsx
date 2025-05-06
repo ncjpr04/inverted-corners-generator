@@ -6,6 +6,7 @@ interface Props {
   setCornerRadius: React.Dispatch<React.SetStateAction<CornerRadius>>;
   setup: Setup;
   invertedCorners: InvertedCorners;
+  borderWidth: number;
 }
 
 const Handlers = ({
@@ -13,6 +14,7 @@ const Handlers = ({
   setCornerRadius,
   setup,
   invertedCorners,
+  borderWidth,
 }: Props) => {
   const activeHandler = useRef<number>(null);
   const circlesRef = useRef<SVGGElement>(null);
@@ -23,8 +25,9 @@ const Handlers = ({
     const controller = new AbortController();
 
     circlesRef.current.addEventListener(
-      "mousedown",
+      "pointerdown",
       (e) => {
+        e.preventDefault();
         if (!e.target) return;
         const circle = e.target as SVGCircleElement;
         activeHandler.current = +circle.getAttribute("data-index")!;
@@ -36,7 +39,7 @@ const Handlers = ({
     );
 
     document.addEventListener(
-      "mousemove",
+      "pointermove",
       (e) => {
         if (activeHandler.current === null) return;
 
@@ -76,7 +79,7 @@ const Handlers = ({
     );
 
     document.addEventListener(
-      "mouseup",
+      "pointerup",
       () => {
         activeHandler.current = null;
       },
@@ -92,33 +95,33 @@ const Handlers = ({
         {!invertedCorners.tl.inverted && (
           <circle
             data-index={0}
-            cx={cornerRadius.tl}
-            cy={cornerRadius.tl}
-            r="1"
+            cx={cornerRadius.tl + borderWidth}
+            cy={cornerRadius.tl + borderWidth}
+            r="1%"
           />
         )}
         {!invertedCorners.tr.inverted && (
           <circle
             data-index={1}
-            cx={setup.width - cornerRadius.tr}
-            cy={cornerRadius.tr}
-            r="1"
+            cx={setup.width - cornerRadius.tr + borderWidth}
+            cy={cornerRadius.tr + borderWidth}
+            r="1%"
           />
         )}
         {!invertedCorners.br.inverted && (
           <circle
             data-index={2}
-            cx={setup.width - cornerRadius.br}
-            cy={setup.height - cornerRadius.br}
-            r="1"
+            cx={setup.width - cornerRadius.br + borderWidth}
+            cy={setup.height - cornerRadius.br + borderWidth}
+            r="1%"
           />
         )}
         {!invertedCorners.bl.inverted && (
           <circle
             data-index={3}
-            cx={cornerRadius.bl}
-            cy={setup.height - cornerRadius.bl}
-            r="1"
+            cx={cornerRadius.bl + borderWidth}
+            cy={setup.height - cornerRadius.bl + borderWidth}
+            r="1%"
           />
         )}
       </g>

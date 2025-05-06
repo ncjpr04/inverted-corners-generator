@@ -21,6 +21,12 @@ interface Props {
   setCornerRadius: React.Dispatch<React.SetStateAction<CornerRadius>>;
   invertedCorners: InvertedCorners;
   setInvertedCorners: React.Dispatch<React.SetStateAction<InvertedCorners>>;
+  borderWidth: number;
+  setBorderWidth: React.Dispatch<React.SetStateAction<number>>;
+  borderColor: string;
+  setBorderColor: React.Dispatch<React.SetStateAction<string>>;
+  backgroundColor: string;
+  setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
 }
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactElement;
@@ -84,6 +90,12 @@ const Controllers = ({
   cornerRadius,
   invertedCorners,
   setInvertedCorners,
+  borderWidth,
+  setBorderWidth,
+  borderColor,
+  setBorderColor,
+  backgroundColor,
+  setBackgroundColor,
 }: Props) => {
   const [aspectRatio, setAspectRatio] = useState(
     gcd(setup.width, setup.height)
@@ -215,7 +227,7 @@ const Controllers = ({
   };
 
   return (
-    <div className="rounded-2xl flex flex-col gap-4 shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
+    <div className="rounded-2xl overflow-auto flex flex-col gap-4 shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
       <div>
         <h2 className="mb-2">Dimensions:</h2>
         <div className="flex items-center gap-2">
@@ -462,6 +474,36 @@ const Controllers = ({
             />
           </div>
         </div>
+      </div>
+
+      <div>
+        <h2 className="mb-2">Border</h2>
+        <div className="grid grid-cols-[1fr_auto] gap-2">
+          <Input
+            name="border"
+            aria-label="border width"
+            onChange={(e) => setBorderWidth(Number(e.target.value))}
+            value={borderWidth}
+          />
+          <input
+            aria-label="border color"
+            value={borderColor}
+            onChange={(e) => setBorderColor(e.target.value)}
+            className="border h-[1.8rem] w-[1.8rem]"
+            type="color"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h2 className="mb-2">Background</h2>
+        <input
+          aria-label="background color"
+          value={backgroundColor}
+          onChange={(e) => setBackgroundColor(e.target.value)}
+          className="border h-[1.8rem] w-[1.8rem]"
+          type="color"
+        />
       </div>
     </div>
   );

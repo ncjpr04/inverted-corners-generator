@@ -3,11 +3,17 @@ import ExportModal from "./ExportModal";
 import { useRef } from "react";
 
 interface Props {
-  setup: Setup;
-  path: string;
+  pathConfig: {
+    setup: Setup;
+    cornerRadius: CornerRadius;
+    invertedCorners: InvertedCorners;
+    borderWidth: number;
+    borderColor: string;
+    backgroundColor: string;
+  };
 }
 
-const Header = ({ setup, path }: Props) => {
+const Header = ({ pathConfig }: Props) => {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   return (
@@ -24,7 +30,7 @@ const Header = ({ setup, path }: Props) => {
         </button>
       </header>
 
-      <ExportModal ref={modalRef} setup={setup} path={path} />
+      <ExportModal ref={modalRef} pathConfig={pathConfig} />
     </>
   );
 };

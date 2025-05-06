@@ -2,47 +2,85 @@ import { useState, useRef, useEffect } from "react";
 import Header from "./components/Header.tsx";
 import Controllers from "./components/Controllers.tsx";
 import Handlers from "./components/Handlers.tsx";
-import { generatePath } from "./utils/index.ts";
+import { generateBorderPath, generatePath } from "./utils/index.ts";
+import {
+  DEFAULT_BACKGROUND_COLOR,
+  DEFAULT_BORDER_COLOR,
+  DEFAULT_BORDER_WIDTH,
+  DEFAULT_CORNER_RADIUS,
+  DEFAULT_INVERTED_CORNERS,
+  DEFAULT_SETUP,
+  getInitialCornerRadius,
+  getInitialInvertedCornersValues,
+} from "./utils/config.ts";
 
+// TODO: support Gradient
 function App() {
-  const [setup, setSetup] = useState({ width: 100, height: 100 });
-  const [cornerRadius, setCornerRadius] = useState({
-    tl: 20,
-    tr: 1,
-    br: 10,
-    bl: 10,
-  });
-  const [invertedCorners, setInvertedCorners] = useState({
-    tl: { width: 20, height: 30, roundness: 10, inverted: false },
-    tr: { width: 60, height: 30, roundness: 10, inverted: true },
-    br: { width: 30, height: 20, roundness: 10, inverted: false },
-    bl: { width: 20, height: 20, roundness: 10, inverted: true },
-  });
+  const [setup, setSetup] = useState(DEFAULT_SETUP);
+  const [cornerRadius, setCornerRadius] = useState(DEFAULT_CORNER_RADIUS);
+  const [invertedCorners, setInvertedCorners] = useState(
+    DEFAULT_INVERTED_CORNERS
+  );
+  const [borderWidth, setBorderWidth] = useState(DEFAULT_BORDER_WIDTH);
+  const [borderColor, setBorderColor] = useState(DEFAULT_BORDER_COLOR);
+  const [backgroundColor, setBackgroundColor] = useState(
+    DEFAULT_BACKGROUND_COLOR
+  );
   const [pathCode, setPathCode] = useState("");
+  const [outerPathCode, setOuterPathCode] = useState("");
 
   const pathRef = useRef(null);
+  const outerPathRef = useRef(null);
 
   useEffect(() => {
-    setPathCode(generatePath(setup, cornerRadius, invertedCorners));
-  }, [setup, cornerRadius, invertedCorners]);
+    if (!location.search) return;
+
+    setCornerRadius(getInitialCornerRadius());
+    setInvertedCorners(getInitialInvertedCornersValues());
+  }, []);
+
+  useEffect(() => {
+    setPathCode(
+      generatePath(setup, cornerRadius, invertedCorners, {
+        x: borderWidth,
+        y: borderWidth,
+      })
+    );
+    setOuterPathCode(
+      generateBorderPath(setup, cornerRadius, invertedCorners, borderWidth)
+    );
+  }, [setup, cornerRadius, invertedCorners, borderWidth]);
 
   return (
     <>
-      <Header path={pathCode} setup={setup} />
+      <Header
+        pathConfig={{
+          setup,
+          cornerRadius,
+          invertedCorners,
+          borderWidth,
+          borderColor,
+          backgroundColor,
+        }}
+      />
       <main className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4">
         <div className="p-4 flex justify-center items-center">
           <svg
-            viewBox={`0 0 ${setup.width} ${setup.height}`}
+            viewBox={`0 0 ${setup.width + borderWidth * 2} ${
+              setup.height + borderWidth * 2
+            }`}
             xmlns="http://www.w3.org/2000/svg"
-            className="max-h-[70vh]"
+            className="max-h-[70vh] overflow-visible"
           >
-            <path ref={pathRef} d={pathCode} className="fill-coffee" />
+            <path ref={outerPathRef} d={outerPathCode} fill={borderColor} />
+            <path ref={pathRef} d={pathCode} fill={backgroundColor} />
 
             <Handlers
               cornerRadius={cornerRadius}
               setCornerRadius={setCornerRadius}
               invertedCorners={invertedCorners}
               setup={setup}
+              borderWidth={borderWidth}
             />
           </svg>
         </div>
@@ -54,6 +92,12 @@ function App() {
           setCornerRadius={setCornerRadius}
           invertedCorners={invertedCorners}
           setInvertedCorners={setInvertedCorners}
+          borderWidth={borderWidth}
+          setBorderWidth={setBorderWidth}
+          borderColor={borderColor}
+          setBorderColor={setBorderColor}
+          backgroundColor={backgroundColor}
+          setBackgroundColor={setBackgroundColor}
         />
       </main>
     </>
