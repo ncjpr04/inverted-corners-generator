@@ -2,7 +2,7 @@
 
 # Corner Inverter
 
-A tool to help you generate inverted border radii for you CSS components, powered by SVG path.
+A tool to help you generate inverted border radii for you CSS components, powered by SVG path. [try it here!](https://corner-inverter.douiri.org).
 
 ![Screenshot](./public/screenshot.png)
 
