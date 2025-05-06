@@ -51,10 +51,25 @@
     background-color: var(--color-frappe);
   }
   [role="switch"]:checked::before {
-    transform: translateX(calc(100% - var(--padd) / 2));
+    transform: translateX(100%);
   }
   [role="switch"]:hover::before,
   [role="switch"]:focus-visible::before {
     box-shadow: 0 0 0 2px #cfd8dc90;
+  }
+
+  input[type="color"] {
+    appearance: none;
+    margin: 0;
+    border-radius: 8px;
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  input[type="color"]::-webkit-color-swatch {
+    border: none;
+  }
+  input[type="color"]::-moz-color-swatch {
+    border: none;
   }
 }
