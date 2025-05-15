@@ -7,8 +7,8 @@ export const DEFAULT_SETUP = {
 
 export const DEFAULT_BORDER_WIDTH = Number(p.get("b")) || 0;
 
-export const DEFAULT_BORDER_COLOR = "#" + p.get("bc") || "FF2056";
-export const DEFAULT_BACKGROUND_COLOR = "#" + p.get("bg") || "513D34";
+export const DEFAULT_BORDER_COLOR = "#" + (p.get("bc") || "FF2056");
+export const DEFAULT_BACKGROUND_COLOR = "#" + (p.get("bg") || "513D34");
 
 export const DEFAULT_CORNER_RADIUS = {
   tl: 20,

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BsDownload } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
-import { MdLink, MdOutlineContentCopy } from "react-icons/md";
+import { MdLink } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { gcd, generateBorderPath, generatePath } from "../utils";
 import CodeBlock from "./CodeBlock";
@@ -18,7 +18,6 @@ interface Props {
   ref: React.RefObject<HTMLDialogElement | null>;
 }
 
-// TODO: tabs for copying mask and clip-path with CSS code visible
 const ExportModal = ({ pathConfig, ref }: Props) => {
   const {
     setup,

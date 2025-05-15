@@ -63,7 +63,10 @@ function App() {
           backgroundColor,
         }}
       />
-      <main className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4">
+      <main
+        id="tool"
+        className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4"
+      >
         <div className="p-4 flex justify-center items-center">
           <svg
             viewBox={`0 0 ${setup.width + borderWidth * 2} ${
@@ -84,6 +87,13 @@ function App() {
             />
           </svg>
         </div>
+
+        {/* <a
+          href="#content"
+          className="absolute left-0 top-0 -translate-y-full focus:translate-0 bg-bg p-2"
+        >
+          Skip the tool and jump to the content.
+        </a> */}
 
         <Controllers
           setup={setup}
