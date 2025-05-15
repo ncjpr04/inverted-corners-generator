@@ -87,7 +87,7 @@ const Handlers = ({
     );
 
     return () => controller.abort();
-  }, []);
+  }, [setup]);
 
   return (
     <>
