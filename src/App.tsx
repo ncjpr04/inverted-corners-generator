@@ -65,9 +65,9 @@ function App() {
       />
       <main
         id="tool"
-        className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4"
+        className="grid md:grid-cols-[1fr_min(100%,300px)] gap-4 p-4 pt-1"
       >
-        <div className="p-4 flex justify-center items-center">
+        <div className="relative border-2 border-coffee p-4 flex overflow-hidden rounded-2xl justify-center items-center">
           <svg
             viewBox={`0 0 ${setup.width + borderWidth * 2} ${
               setup.height + borderWidth * 2
@@ -75,6 +75,30 @@ function App() {
             xmlns="http://www.w3.org/2000/svg"
             className="max-h-[70vh] overflow-visible"
           >
+            <defs>
+              <pattern
+                id="grid"
+                width="10"
+                height="10"
+                patternUnits="userSpaceOnUse"
+              >
+                <path
+                  d="M 10 0 L 0 0 0 10"
+                  fill="none"
+                  stroke="#513d34"
+                  opacity={0.2}
+                  strokeWidth="0.5"
+                />
+              </pattern>
+            </defs>
+
+            <rect
+              width="500%"
+              height="500%"
+              className="-translate-[200%]"
+              fill="url(#grid)"
+            />
+
             <path ref={outerPathRef} d={outerPathCode} fill={borderColor} />
             <path ref={pathRef} d={pathCode} fill={backgroundColor} />
 

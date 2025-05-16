@@ -18,7 +18,7 @@ const Header = ({ pathConfig }: Props) => {
 
   return (
     <>
-      <header className="flex items-center justify-between p-4 pb-0">
+      <header className="flex relative bg-bg items-center justify-between p-4">
         <a href="#" className="text-coffee">
           <img src="/logo.svg" width={40} height={40} />
         </a>

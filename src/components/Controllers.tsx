@@ -227,7 +227,7 @@ const Controllers = ({
   };
 
   return (
-    <div className="rounded-2xl overflow-auto flex flex-col gap-4 shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
+    <div className="rounded-2xl bg-bg overflow-auto flex flex-col gap-4 [scrollbar-width:thin] shadow-[0_0_9px_rgb(0_0_0_/_.1)] md:h-[85vh] p-4">
       <div>
         <h2 className="mb-2">Dimensions:</h2>
         <div className="flex items-center gap-2">

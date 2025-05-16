@@ -9,6 +9,9 @@
 }
 
 @layer base {
+  :root {
+    scrollbar-color: var(--color-coffee) var(--color-bg);
+  }
   button {
     @apply cursor-pointer;
   }
