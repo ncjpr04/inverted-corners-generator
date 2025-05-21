@@ -13,6 +13,8 @@ import {
   RxCornerTopRight,
 } from "react-icons/rx";
 import InvertedTopRightCorner from "../assets/InvertedTopRightCorner";
+import ColorInput from "./ColorInput";
+import Stroke from "../assets/Stroke";
 
 interface Props {
   setup: Setup;
@@ -478,31 +480,28 @@ const Controllers = ({
 
       <div>
         <h2 className="mb-2">Border</h2>
-        <div className="grid grid-cols-[1fr_auto] gap-2">
+        <div className="grid grid-cols-[1fr_auto] gap-2 items-center">
           <Input
             name="border"
             aria-label="border width"
             onChange={(e) => setBorderWidth(Number(e.target.value))}
             value={borderWidth}
+            icon={<Stroke />}
           />
-          <input
-            aria-label="border color"
+          <ColorInput
+            label="border color"
             value={borderColor}
-            onChange={(e) => setBorderColor(e.target.value)}
-            className="border h-[1.8rem] w-[1.8rem]"
-            type="color"
+            setValue={setBorderColor}
           />
         </div>
       </div>
 
       <div>
         <h2 className="mb-2">Background</h2>
-        <input
-          aria-label="background color"
+        <ColorInput
           value={backgroundColor}
-          onChange={(e) => setBackgroundColor(e.target.value)}
-          className="border h-[1.8rem] w-[1.8rem]"
-          type="color"
+          label="background color"
+          setValue={setBackgroundColor}
         />
       </div>
     </div>
