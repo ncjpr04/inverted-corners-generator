@@ -29,6 +29,12 @@ interface Props {
   setBorderColor: React.Dispatch<React.SetStateAction<string>>;
   backgroundColor: string;
   setBackgroundColor: React.Dispatch<React.SetStateAction<string>>;
+  gridSize: { width: number; height: number };
+  setGridSize: React.Dispatch<React.SetStateAction<{ width: number; height: number }>>;
+  gridColor: string;
+  setGridColor: React.Dispatch<React.SetStateAction<string>>;
+  gridOpacity: number;
+  setGridOpacity: React.Dispatch<React.SetStateAction<number>>;
 }
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactElement;
@@ -98,6 +104,12 @@ const Controllers = ({
   setBorderColor,
   backgroundColor,
   setBackgroundColor,
+  gridSize,
+  setGridSize,
+  gridColor,
+  setGridColor,
+  gridOpacity,
+  setGridOpacity,
 }: Props) => {
   const [aspectRatio, setAspectRatio] = useState(
     gcd(setup.width, setup.height)
@@ -503,6 +515,45 @@ const Controllers = ({
           label="background color"
           setValue={setBackgroundColor}
         />
+      </div>
+
+      <div>
+        <h2 className="mb-2">Grid</h2>
+        <div className="flex items-center gap-2 mb-2">
+          <Input
+            icon={<span>W</span>}
+            name="gridWidth"
+            aria-label="grid width"
+            value={gridSize.width}
+            onChange={(e) => setGridSize(prev => ({ ...prev, width: Number(e.target.value) }))}
+          />
+          &times;
+          <Input
+            icon={<span>H</span>}
+            name="gridHeight"
+            aria-label="grid height"
+            value={gridSize.height}
+            onChange={(e) => setGridSize(prev => ({ ...prev, height: Number(e.target.value) }))}
+          />
+        </div>
+        <div className="grid grid-cols-[1fr_auto] gap-2 items-center mb-2">
+          <Input
+            name="gridOpacity"
+            aria-label="grid opacity"
+            type="number"
+            min="0"
+            max="1"
+            step="0.1"
+            value={gridOpacity}
+            onChange={(e) => setGridOpacity(Number(e.target.value))}
+            icon={<span>O</span>}
+          />
+          <ColorInput
+            label="grid color"
+            value={gridColor}
+            setValue={setGridColor}
+          />
+        </div>
       </div>
     </div>
   );

@@ -28,6 +28,9 @@ function App() {
   );
   const [pathCode, setPathCode] = useState("");
   const [outerPathCode, setOuterPathCode] = useState("");
+  const [gridSize, setGridSize] = useState({ width: 10, height: 10 });
+  const [gridColor, setGridColor] = useState("#513d34");
+  const [gridOpacity, setGridOpacity] = useState(0.2);
 
   const pathRef = useRef(null);
   const outerPathRef = useRef(null);
@@ -78,15 +81,15 @@ function App() {
             <defs>
               <pattern
                 id="grid"
-                width="10"
-                height="10"
+                width={gridSize.width}
+                height={gridSize.height}
                 patternUnits="userSpaceOnUse"
               >
                 <path
-                  d="M 10 0 L 0 0 0 10"
+                  d={`M ${gridSize.width} 0 L 0 0 0 ${gridSize.height}`}
                   fill="none"
-                  stroke="#513d34"
-                  opacity={0.2}
+                  stroke={gridColor}
+                  opacity={gridOpacity}
                   strokeWidth="0.5"
                 />
               </pattern>
@@ -132,6 +135,12 @@ function App() {
           setBorderColor={setBorderColor}
           backgroundColor={backgroundColor}
           setBackgroundColor={setBackgroundColor}
+          gridSize={gridSize}
+          setGridSize={setGridSize}
+          gridColor={gridColor}
+          setGridColor={setGridColor}
+          gridOpacity={gridOpacity}
+          setGridOpacity={setGridOpacity}
         />
       </main>
     </>
